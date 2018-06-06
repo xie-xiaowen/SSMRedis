@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- redis 数据源 -->
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <!-- 定义最大连接数 -->
+        <property name="maxTotal" value="${redis.maxTotal}" />
+        <!-- 定义最大空闲链接数 -->
+        <property name="maxIdle" value="${redis.maxIdle}" />
+        <!-- 定义最长等待时间 -->
+        <property name="maxWaitMillis" value="${redis.maxWaitMillis}" />
+        <!-- 在获取连接时检查是否有效性 -->
+        <property name="testOnBorrow" value="${redis.testOnBorrow}" />
+    </bean>
+
+    <!-- Spring Data Redis 连接池工厂 -->
+    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <!-- redis 主机IP -->
+        <property name="hostName" value="${redis.host}" />
+        <!-- redis 端口 -->
+        <property name="port" value="${redis.port}" />
+        <!-- 加载JedisPool配置信息 -->
+        <property name="poolConfig" ref="poolConfig" />
+    </bean>
+
+    <!-- 配置RedisTemplate API bean -->
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <!--<property name="keySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+        </property>
+        <property name="valueSerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+        </property>-->
+        <!-- Redis hash key: value 序列化 -->
+        <!--<property name="hashKeySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+        </property>--><!-- 为了方便查看此处key不使用序列化 -->
+        <property name="hashValueSerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+        </property>
+        <property name="connectionFactory" ref="jedisConnectionFactory" />
+    </bean>
+
+    <!--&lt;!&ndash; redis 链接池(jedis) &ndash;&gt;
+    <bean id="jedisPool" class="redis.clients.jedis.JedisPool" destroy-method="destroy" depends-on="poolConfig">
+        &lt;!&ndash; redis 主机IP &ndash;&gt;
+        <constructor-arg name="host" value="${redis.host}" />
+        &lt;!&ndash; redis 端口 &ndash;&gt;
+        <constructor-arg name="port" value="${redis.port}" />
+        &lt;!&ndash; 加载JedisPool配置信息 &ndash;&gt;
+        <constructor-arg name="poolConfig" ref="poolConfig" />
+    </bean>-->
+
+
+</beans>
