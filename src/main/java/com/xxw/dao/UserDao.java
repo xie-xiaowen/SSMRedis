@@ -23,13 +23,4 @@ public class UserDao {
         return sqlSessionTemplate.selectList("UserMapper.findUserList", id);
     }
 
-    /**
-     * 查询全部用户名
-     * @return 用户名
-     * @throws Exception 异常
-     */
-    public List<String> findUserNameAll()throws Exception{
-        return sqlSessionTemplate.selectList("UserMapper.findUserNameAll");
-    }
-
 }

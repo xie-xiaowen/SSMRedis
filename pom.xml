@@ -193,10 +193,17 @@
             <version>1.7.0.RELEASE</version>
         </dependency>
 
+        <!-- mybatis 缓存  -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-ehcache</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
-        <finalName>MVCJedis</finalName>
+        <finalName>SSMRedis</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

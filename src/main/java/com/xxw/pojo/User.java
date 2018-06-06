@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class User implements Serializable {
 
+    private static final long serialVersionUID = -1L;
+
     private String id = null;      // 用户ID
     private String name = null;    // 用户名
     private int age = -1;          // 年龄
